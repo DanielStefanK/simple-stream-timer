@@ -1,6 +1,6 @@
 <template>
-  <div class="covercard">
-      <h1 @click="changeState" :class="{alert: currentTime < 1 && state != 0, stopped: state==0 }">{{prettyTime}}</h1>
+  <div @click="changeState" class="covercard">
+      <h1 :class="{alert: currentTime < 1 && state != 0, stopped: state==0 }">{{prettyTime}}</h1>
   </div>
 </template>
 
@@ -84,5 +84,6 @@ h1 {
   -moz-box-shadow: 14px 24px 24px 5px rgba(0,0,0,0.23);
   box-shadow: 14px 24px 24px 5px rgba(0,0,0,0.23);
   width: 300px;
+  cursor: pointer;
 }
 </style>
