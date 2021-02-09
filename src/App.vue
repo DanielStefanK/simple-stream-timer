@@ -1,5 +1,7 @@
 <template>
-    <h1 @click="changeState" :class="{alert: currentTime < 1 && state != 0, stopped: state==0 }">{{prettyTime}}</h1>
+  <div class="covercard">
+      <h1 @click="changeState" :class="{alert: currentTime < 1 && state != 0, stopped: state==0 }">{{prettyTime}}</h1>
+  </div>
 </template>
 
 <script>
@@ -53,13 +55,17 @@ const getConfig = () => {
 </script>
 
 <style>
-#app {
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 h1 {
   font-size: 500%;
@@ -70,5 +76,13 @@ h1 {
 
 .stopped {
   color: rgb(115, 230, 172);
+}
+
+.covercard {
+  background-color: white;
+  -webkit-box-shadow: 14px 24px 24px 5px rgba(0,0,0,0.23);
+  -moz-box-shadow: 14px 24px 24px 5px rgba(0,0,0,0.23);
+  box-shadow: 14px 24px 24px 5px rgba(0,0,0,0.23);
+  width: 300px;
 }
 </style>
