@@ -40,7 +40,8 @@ export default {
 
     const prettyTime = computed(()=>{
       const seconds =  Math.abs(currentTime.value % 60)
-      const minutes = Math.abs(Math.[currentTime.value < 0 ?'round' : 'floor'](currentTime.value / 60))
+      const minutes = Math.floor(Math.abs(currentTime.value / 60))
+      
       return `${currentTime.value<0?'-':''}${minutes>9?'':'0'}${minutes}:${seconds>9?'':'0'}${seconds}`
     })
 
