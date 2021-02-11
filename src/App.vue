@@ -1,6 +1,6 @@
 <template>
   <div @click="changeState" :class="{covercard: true, shakecard: currentTime <=0 && currentTime >-1 && state!=0}">
-      <h1 :class="{alert: currentTime < 1 && state != 0, stopped: state==0, blinking: currentTime <= -30 && currentTime >-60, pulsing: currentTime <= -60 }">{{prettyTime}}</h1>
+      <h1 :class="{alert: currentTime < 1 && state != 0, stopped: state==0, pulsing: currentTime <= -60 }">{{prettyTime}}</h1>
   </div>
 </template>
 
@@ -96,14 +96,6 @@ h1 {
   animation-iteration-count: once;
 }
 
-.blinking {
-  /* Start the shake animation and make the animation last for 0.5 seconds */
-  animation: blink 0.7s;
-
-  /* When the animation is finished, start again */
-  animation-iteration-count: infinite;
-}
-
 .pulsing {
   /* Start the shake animation and make the animation last for 0.5 seconds */
   animation: pulse 1s;
@@ -130,21 +122,6 @@ h1 {
   }
 }
 
-
-@keyframes blink {
-  0% {
-    opacity: 100%;
-  }
-  30% {
-    opacity: 0%;
-  }
-  70% {
-    opacity: 100%;    
-  }
-  100%{
-    opacity: 100%;
-  }
-}
 
 @keyframes pulse {
   0% {
