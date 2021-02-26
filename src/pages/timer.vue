@@ -3,7 +3,7 @@
     @click.right="toggle"
     @click="onClickNumber"
     @click.middle="goBack"
-    :class="{covercard: true, shakecard: currentSeconds <=0 && currentSeconds >-1 && isRunning}">
+    :class="{covercard: true, shakecard: currentSeconds <=0 && currentSeconds >-1}">
       <template v-if="!done">
         <h3 v-if="reps>0" class="removeSpace">{{repsDisplay}}</h3>
         <h1 :class="{alert: currentSeconds < 1 && state != 0, stopped: !isRunning, pulsing: currentSeconds <= -60 }">{{prettyTime}}</h1>
@@ -16,7 +16,7 @@
 
 <script>
 import { useRoute } from 'vue-router'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 
 const sound = require('@/assets/chime.mp3');
 
@@ -24,10 +24,14 @@ export default {
   name: 'App',
   setup () {
     var audio = new Audio(sound)
-    const {intervals, autoChange, reps} = getConfig ()
+    const {intervals, autoChange, reps, allowNegative} = getConfig ()
     const isRunning = ref(false)
     const nextIntervalIndex = ref(0)
     let countdownInterval;
+
+    onBeforeUnmount(() => {
+      clearInterval(countdownInterval)
+    })
 
     const getInterval = () => {
       return intervals[nextIntervalIndex.value%intervals.length]
@@ -43,8 +47,15 @@ export default {
       if (isRunning.value) return
       countdownInterval = setInterval(() => {
         currentSeconds.value--
-        if (currentSeconds.value === 0) audio.play()
+        if (currentSeconds.value === 0)
+        {
+          audio.play()
 
+          if (!allowNegative) {
+            pause()
+          }
+
+        }
         if (currentSeconds.value === -1 && autoChange) {
           pause()
           loadNext ()
@@ -120,11 +131,13 @@ const getConfig = () => {
     const intervals = route.query.intervals ? JSON.parse(route.query.intervals) : [25,5]
     const autoChange = route.query.autoChange ? JSON.parse(route.query.autoChange) : false
     const reps = route.query.reps ? JSON.parse(route.query.reps) : false
+    const allowNegative = route.query.allowNegative ? JSON.parse(route.query.allowNegative) : false
 
     return {
       intervals,
       autoChange,
-      reps
+      reps,
+      allowNegative
     }
 }
 </script>

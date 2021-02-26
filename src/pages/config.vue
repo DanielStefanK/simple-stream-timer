@@ -19,6 +19,11 @@
       </div>
 
       <div class="configContent">
+        <label for="allowNegative">Allow Negative</label>
+        <input id="allowNegative" type="checkbox" v-model="allowNegative">
+      </div>
+
+      <div class="configContent">
         <button type="submit" @click.prevent="submitConfig">
           Submit
         </button>
@@ -68,6 +73,8 @@ export default defineComponent ({
 
     const autoChange = ref(false)
 
+    const allowNegative = ref(false)
+
     const reps = ref(10)
 
     const submitConfig = () => {
@@ -79,7 +86,8 @@ export default defineComponent ({
       router.push({name: "Timer", query: {
         intervals: JSON.stringify(intervals.value),
         reps: reps.value,
-        autoChange: JSON.stringify(autoChange.value)
+        autoChange: JSON.stringify(autoChange.value),
+        allowNegative: JSON.stringify(allowNegative.value)
       }})
     }
 
@@ -89,7 +97,8 @@ export default defineComponent ({
       reps,
       del,
       autoChange,
-      submitConfig
+      submitConfig,
+      allowNegative
     }
   }
 })
